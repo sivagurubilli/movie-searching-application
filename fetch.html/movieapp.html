@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #background{
+            height: 500px;
+            background: cover;
+            background-image: url(https://cdn.wallpapersafari.com/24/74/zgeTuV.jpg);
+        }
+        #search{
+            margin-top: 100px;
+            margin-left: 40%;
+            display: inline-block;
+        }
+        #searchbar{
+            height: 25px;
+            width:200px;
+        }
+        #searchmovie{
+            height: 25px;
+            width:120px;
+            margin-left: 20px;
+        }
+
+        #moviebox{
+            margin-left: 200px;
+            margin-top: 50px;
+            display: grid;
+            width: auto;
+            grid-template-columns: repeat(3,25%);
+            grid-gap :50px;
+            height: auto;
+        }
+        #box{
+            width: 300px;
+
+         text-align: center;
+        }
+        #image{
+            height: 300px;
+            width: 300px;
+        }
+        #errimg{
+            height: 30px;
+            margin-left: 35%;
+            width: 200px;
+            margin-top: 10px;
+        }
+        #movies{
+        width:205px;
+        height: 200px;
+        background-color: white;
+        border:solid 1px black;
+        overflow:scroll;
+    }
+    p{
+        cursor: pointer;
+    }
+    </style>
+    
+</head>
+<body>
+
+    <div id ="background">
+<div id ="search">
+    <input oninput ="debounce(searchnames,1000)" id ="searchbar" type ="text" >
+  
+    <button onclick ="getdata()" id ="searchmovie">SearchMovies</button>
+
+    <div id ="movies"></div>
+</div>
+<div id ="errimg"></div>
+<div id ="moviebox">
+  
+
+</div>
+    </div>
+    
+</body>
+</html>
+
+<script>
+
+    async function searchmoviesinbar(){
+        try{
+            let movie =document.getElementById("searchbar").value
+            let res =await fetch(`http://www.omdbapi.com/?i=tt3896198&apikey=3000357f&s=${movie}`)
+
+            let data1 =await res.json()
+            return data1.Search
+        }
+        catch(err){
+            console.log(err)
+        }
+    }
+    
+   async function searchnames(){
+let data2= await searchmoviesinbar()
+
+if(data2===undefined){
+    return false
+}
+appenddata(data2)
+   }
+
+
+   let moviediv =document.getElementById("movies")
+ 
+   function appenddata(movies){
+       moviediv.innerHTML=null
+       movies.forEach(function(el){
+           let p =document.createElement("p")
+           p.innerText=el.Title
+           
+         
+           moviediv.append(p)
+           p.onclick =function(event){
+           
+           
+            moviediv.innerHTML=""
+               getdata()
+             
+              
+           }
+           
+       })
+   }
+let timerId;
+function debounce(func,delay){
+
+   if(timerId){
+       clearTimeout(timerId)
+   }
+   timerId =setTimeout(function(){
+       func()
+   },delay)
+}
+
+let v="https://www.prestashop.com/sites/default/files/wysiwyg/404_not_found.png";
+    async function getdata(){
+        try{
+           
+            var a =document.querySelector("#searchbar").value
+var res = await fetch(`http://www.omdbapi.com/?i=tt3896198&apikey=3000357f&s=${a}`);
+var data =await res.json()
+console.log(data.Search)
+
+searchmovie(data.Search)
+
+        }catch(err){
+
+            var image1=  document.createElement("img")
+  image1.setAttribute("src",v)
+  image1.setAttribute("id","image1")
+  document.querySelector("#errimg").innerHTML=""
+  errimg.append(image1)
+        }
+    }
+   
+
+
+
+    function searchmovie(data){
+        document.querySelector("#errimg").innerHTML=""
+document.querySelector("#moviebox").innerHTML=""
+data.forEach(function(data){
+
+  var div=  document.createElement("div")
+  div.setAttribute("id","box")
+
+  var image=  document.createElement("img")
+  image.setAttribute("src",data.Poster)
+  image.setAttribute("id","image")
+  var title=  document.createElement("p")
+  title.innerText= "Movie Name --"+`  ${data.Title}`
+  div.setAttribute("id","title")
+  var year=  document.createElement("p")
+  year.setAttribute("id","year")
+  year.innerText="Release year --"+`  ${data.Year}`
+  rat =Math.random()*(9.5-5.0)+5.0;
+rate =rat.toFixed(1)
+  var rating=  document.createElement("p")
+  rating.setAttribute("id","rating")
+
+  rating.textContent="Rating--"+`   ${rate}`
+
+  var rec=  document.createElement("p")
+  if(rate>8.4){
+    rec.innerText="Recomended"
+}
+if(rate<8.4){
+    rec.innerText="Average"
+}
+
+div.append(image,title,year,rating,rec)
+moviebox.append(div)
+})
+    }
+      
+</script>

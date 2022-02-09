@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #ordercheck{
+margin-left: 100px;
+margin-top: 100px;
+display: flex;
+        }
+        #burger,#chicken,#biryani,#coffe{
+            display: flex;
+            margin-left: 30px;
+            
+           
+        }
+        #burgercheck,#chikencheck,#biryanicheck,#coffecheck{
+height: 20px;
+width: 20px;
+        }
+        p{
+            margin-top: 2px;
+            margin-left: 15px;
+            font-size: 16px;
+        }
+        #orderFood{
+            height: 30px;
+            width: 100px;
+            margin-left: 300px;
+            margin-top: 50px;
+
+        }
+        #idnum{
+            text-align: right;
+        }
+        #img{
+            margin-left: 100px;
+            margin-top: 100px;
+        }
+    </style>
+</head>
+<body>
+
+   <h3 id ="idnum"></h3>
+    <div id ="ordercheck">
+        <div id ="burger">
+        <input type="checkbox" value="burger" id ="burgercheck">
+        <p>burger</p>
+        </div>
+        <div id ="chicken">
+            <input type="checkbox" value="chicken" id ="chikencheck">
+            <p>chicken</p>
+            </div>
+            <div id ="biryani">
+                <input type="checkbox" value="biryani" id ="biryanicheck">
+                <p>biryani</p>
+                </div>
+                <div id ="coffe">
+                    <input type="checkbox" value="coffe" id ="coffecheck">
+                    <p>coffe</p>
+                    </div>
+    </div>
+   <div>
+       <button onclick ="order1()" id ="orderFood">orderFood</button>
+   </div>
+   <p id ="imgs"></p>
+  <img src ="" id = "img">
+</body>
+</html>
+<script>
+    burger_img="https://cdn.pixabay.com/photo/2021/01/19/08/47/sandwich-5930496__340.jpg"
+    chicken_img ="https://cdn.pixabay.com/photo/2016/07/22/05/07/delicious-1534207__480.jpg"
+    biryani_img ="https://cdn.pixabay.com/photo/2019/05/30/19/15/rice-dish-4240511__340.jpg"
+    coffe_img="https://cdn.pixabay.com/photo/2016/04/26/16/58/coffe-1354786__340.jpg"
+    let result =document.querySelector("#img")
+    let idnum =document.querySelector("#idnum")
+ async function order1(){
+     try{
+    let status ="open"
+    let food_promise = new Promise(function(resolve,reject){
+        setTimeout(function(){
+            if(status=="open"){
+                resolve()
+            }else{
+                reject("it was close")
+            }
+        },1000)
+    })
+
+     
+ let res =await food_promise
+ order()
+alert("you got order soon")
+ }
+ catch(err){
+     alert(err)
+ }
+
+ }
+
+
+
+    function order(){
+       
+        let checkbox = document.querySelector('input[type="checkbox"]:checked')
+let id =Math.round(Math.random(1,100))
+
+
+
+setTimeout(function(){
+   
+    
+    if(checkbox.value=="burger"){
+        result.src =burger_img
+        idnum.innerText=`order id -${id}`
+    }
+    if(checkbox.value=="chicken"){
+        result.src =chicken_img
+        idnum.innerText=`order id -${id}`
+    }
+    if(checkbox.value=="biryani"){
+        result.src =biryani_img
+        idnum.innerText=`order id -${id}`
+    }
+    if(checkbox.value=="coffe"){
+        result.src =coffe_img
+        idnum.innerText=`order id -${id}`
+    }
+},5000)
+    }
+    
+    
+    
+</script>

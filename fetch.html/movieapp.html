@@ -56,6 +56,8 @@
         background-color: white;
         border:solid 1px black;
         overflow:scroll;
+      
+       
     }
     p{
         cursor: pointer;
@@ -84,12 +86,19 @@
 </html>
 
 <script>
+      
+      
+   let moviediv =document.getElementById("movies")
+   let movie =document.getElementById("searchbar").value
+
+ 
 
     async function searchmoviesinbar(){
         try{
             let movie =document.getElementById("searchbar").value
+         
             let res =await fetch(`http://www.omdbapi.com/?i=tt3896198&apikey=3000357f&s=${movie}`)
-
+           
             let data1 =await res.json()
             return data1.Search
         }
@@ -97,6 +106,7 @@
             console.log(err)
         }
     }
+   
     
    async function searchnames(){
 let data2= await searchmoviesinbar()
@@ -105,11 +115,11 @@ if(data2===undefined){
     return false
 }
 appenddata(data2)
+
    }
+   
 
 
-   let moviediv =document.getElementById("movies")
- 
    function appenddata(movies){
        moviediv.innerHTML=null
        movies.forEach(function(el){
@@ -118,6 +128,7 @@ appenddata(data2)
            
          
            moviediv.append(p)
+          
            p.onclick =function(event){
            
            
@@ -140,14 +151,20 @@ function debounce(func,delay){
    },delay)
 }
 
+
+
+
 let v="https://www.prestashop.com/sites/default/files/wysiwyg/404_not_found.png";
+
+
     async function getdata(){
         try{
            
             var a =document.querySelector("#searchbar").value
 var res = await fetch(`http://www.omdbapi.com/?i=tt3896198&apikey=3000357f&s=${a}`);
 var data =await res.json()
-console.log(data.Search)
+
+
 
 searchmovie(data.Search)
 
@@ -189,6 +206,7 @@ rate =rat.toFixed(1)
   rating.textContent="Rating--"+`   ${rate}`
 
   var rec=  document.createElement("p")
+  
   if(rate>8.4){
     rec.innerText="Recomended"
 }
@@ -198,6 +216,7 @@ if(rate<8.4){
 
 div.append(image,title,year,rating,rec)
 moviebox.append(div)
+
 })
     }
       

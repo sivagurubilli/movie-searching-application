@@ -33,7 +33,7 @@
 </html>
 <script>
     
-    let API_KEY ="AIzaSyCQfMBi7HfH6UXGFe8oNC7ettP5Q7pN4-Y";
+    let API_KEY ="AIzaSyAdIMA6_mnM4pOjmkF_JMmXk1616EHVM20";
 let searchresults =document.getElementById("searchresults")
 
 const searchvideo=async()=>{
@@ -45,23 +45,23 @@ const searchvideo=async()=>{
 console.log(videolist)
 displaydata(videolist)
 }catch(err){
-console.log(err)
+console.log(load)
 }
 }
 
  const displaydata=(videoarray)=>{
      searchresults.innerHTML=""
-  videoarray.forEach((video)=>{
+  videoarray.map((video)=>{
 
 
-const {id:{videoid},}=video;
+const {id:{videoId},}=video;
 let videocard=  document.createElement("div")
 let Iframe =document.createElement("iframe")
-Iframe.src =`https://www.youtube.com/embed/${videoid}`;
-
-Iframe.setAttribute("allowfullscreen",true);
-Iframe.width=100%
+Iframe.src =`https://www.youtube.com/embed/${videoId}`;
+Iframe.setAttribute("allowfullscreen",true)
+Iframe.width="100%"
 videocard.append(Iframe)
+
 searchresults.append(videocard)
 
   })
